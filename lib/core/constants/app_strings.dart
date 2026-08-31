@@ -4,6 +4,26 @@ library;
 class AppStrings {
   AppStrings._();
 
+  // ── Onboarding ───────────────────────────────────────────────────────────
+  static const String onboardingSkip = 'Skip';
+  static const String onboardingNext = 'Next';
+  static const String onboardingGetStarted = 'Get started';
+
+  static const String onboarding1Title = 'AI calls in any language';
+  static const String onboarding1Body =
+      'NYESCALL dials out on your behalf and holds the full conversation — '
+      'reminders, confirmations, follow-ups — in the language your contact speaks.';
+
+  static const String onboarding2Title = 'Your voice, your words';
+  static const String onboarding2Body =
+      'Upload or record your own voice sample. Set the tone, speed and '
+      'language, then let the AI carry it naturally across every call.';
+
+  static const String onboarding3Title = '7 days free, no card needed';
+  static const String onboarding3Body =
+      'Start your trial instantly — 20 included calls, full access to all '
+      'features, and local payment options when you\'re ready to subscribe.';
+
   // Landing
   static const String landingHeadline =
       'Let AI make your calls — in the language your customer speaks.';

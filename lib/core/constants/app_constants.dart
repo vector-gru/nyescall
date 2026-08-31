@@ -33,9 +33,15 @@ class AppConstants {
 
   // Subscription pricing (XAF)
   static const int monthlyPrice = 23500;
-  static const int sixMonthsPrice = 100000;
-  static const int yearlyPrice = 92000;
+  static const int sixMonthsPrice = 92000;
+  static const int yearlyPrice = 100000;
   static const int overagePricePerCall = 25;
+
+  // ── Sandbox / testing ────────────────────────────────────────────────────
+  // CamPay sandbox accounts are capped at 25 XAF per transaction.
+  // Set this to true while testing; flip to false before going to production.
+  static const bool campayUseSandboxAmount = true;
+  static const int campayMaxSandboxAmount = 25;
 
   // Subscription call quotas
   static const int monthlyCallsIncluded = 1000;

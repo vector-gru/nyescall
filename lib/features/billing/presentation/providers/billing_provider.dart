@@ -122,8 +122,15 @@ class PaymentNotifier extends StateNotifier<PaymentState> {
       state = const PaymentLoading('Sending payment request…');
 
       // Step 2 — initiate the collection
+      // In sandbox mode CamPay caps transactions at 25 XAF; the real plan
+      // amount is still recorded in Firestore so everything else behaves
+      // as if the full amount was paid. Flip AppConstants.campayUseSandboxAmount
+      // to false before going to production.
+      final chargeAmount = AppConstants.campayUseSandboxAmount
+          ? AppConstants.campayMaxSandboxAmount
+          : plan.priceXaf;
       final result = await _camPay.collect(
-        amount: plan.priceXaf.toString(),
+        amount: chargeAmount.toString(),
         from: trimmed,
         description: 'NYESCALL ${plan.label} subscription',
       );

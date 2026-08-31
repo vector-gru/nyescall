@@ -12,6 +12,7 @@ import '../../features/auth/presentation/screens/email_confirmation_screen.dart'
 import '../../features/billing/presentation/screens/billing_screen.dart';
 import '../../features/call/presentation/screens/call_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
 import '../../features/organization/presentation/screens/organization_screen.dart';
 import '../../features/staff/presentation/screens/staff_screen.dart';
 import '../../features/voices/presentation/screens/voices_screen.dart';
@@ -21,24 +22,40 @@ import 'main_shell.dart';
 
 part 'app_router.g.dart';
 
+/// Seeded in main.dart before the app starts — stays true for the app lifetime
+/// once onboarding is completed (a restart re-reads from SharedPreferences).
+final onboardingDoneProvider = StateProvider<bool>((_) => false);
+
 @riverpod
 GoRouter appRouter(Ref ref) {
   final authState = ref.watch(authStateProvider);
+  final onboardingDone = ref.watch(onboardingDoneProvider);
 
   return GoRouter(
-    initialLocation: AppRoutes.landing,
+    initialLocation: onboardingDone ? AppRoutes.landing : AppRoutes.onboarding,
     debugLogDiagnostics: true,
     redirect: (context, state) {
+      // ── Onboarding gate (synchronous — value read once at startup) ───────
+      if (!onboardingDone && state.matchedLocation != AppRoutes.onboarding) {
+        return AppRoutes.onboarding;
+      }
+
+      // ── Auth guard ───────────────────────────────────────────────────────
       return authState.when(
         data: (user) {
           final isLoggedIn = user != null;
-          final isOnAuthRoute = state.matchedLocation == AppRoutes.landing ||
+          final isOnPublicRoute = state.matchedLocation == AppRoutes.landing ||
               state.matchedLocation == AppRoutes.signIn ||
               state.matchedLocation == AppRoutes.signUp ||
-              state.matchedLocation == AppRoutes.emailConfirmation;
+              state.matchedLocation == AppRoutes.emailConfirmation ||
+              state.matchedLocation == AppRoutes.onboarding;
 
-          if (!isLoggedIn && !isOnAuthRoute) return AppRoutes.landing;
-          if (isLoggedIn && isOnAuthRoute) return AppRoutes.home;
+          if (!isLoggedIn && !isOnPublicRoute) return AppRoutes.landing;
+          // Only redirect away from onboarding/landing/sign-in if onboarding
+          // is already done — prevents the loop.
+          if (isLoggedIn && isOnPublicRoute && onboardingDone) {
+            return AppRoutes.home;
+          }
           return null;
         },
         loading: () => null,
@@ -49,6 +66,12 @@ GoRouter appRouter(Ref ref) {
       FirebaseAuth.instance.authStateChanges(),
     ),
     routes: [
+      // ── Onboarding (first-launch only) ─────────────────────────────────
+      GoRoute(
+        path: AppRoutes.onboarding,
+        builder: (_, __) => const OnboardingScreen(),
+      ),
+
       // ── Auth routes (no shell) ──────────────────────────────────────────
       GoRoute(
         path: AppRoutes.landing,

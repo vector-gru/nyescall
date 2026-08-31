@@ -1,6 +1,7 @@
 /// Named route paths used throughout the app.
 abstract final class AppRoutes {
   // ── Auth / onboarding ────────────────────────────────────────────────────
+  static const String onboarding = '/onboarding';
   static const String landing = '/';
   static const String signIn = '/sign-in';
   static const String signUp = '/sign-up';

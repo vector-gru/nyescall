@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../../../core/constants/app_constants.dart';
+
 enum SubscriptionPlan { monthly, sixMonths, yearly }
 
 enum SubscriptionStatus { trial, active, expired, cancelled }
@@ -56,8 +58,10 @@ class SubscriptionModel {
       ),
       startDate: (d['startDate'] as Timestamp?)?.toDate() ?? DateTime.now(),
       endDate: (d['endDate'] as Timestamp?)?.toDate() ??
-          DateTime.now().add(const Duration(days: 7)),
-      callsIncluded: (d['callsIncluded'] as int?) ?? 20,
+          DateTime.now()
+              .add(const Duration(days: AppConstants.trialDurationDays)),
+      callsIncluded:
+          (d['callsIncluded'] as int?) ?? AppConstants.trialCallsIncluded,
       callsUsed: (d['callsUsed'] as int?) ?? 0,
       extraCalls: (d['extraCalls'] as int?) ?? 0,
       overageDueXaf: (d['overageDueXaf'] as int?) ?? 0,
@@ -68,9 +72,10 @@ class SubscriptionModel {
   factory SubscriptionModel.trial() => SubscriptionModel(
         plan: SubscriptionPlan.monthly,
         status: SubscriptionStatus.trial,
-        startDate: DateTime.now().subtract(const Duration(days: 2)),
-        endDate: DateTime.now().add(const Duration(days: 5)),
-        callsIncluded: 25,
+        startDate: DateTime.now(),
+        endDate: DateTime.now()
+            .add(const Duration(days: AppConstants.trialDurationDays)),
+        callsIncluded: AppConstants.trialCallsIncluded,
         callsUsed: 0,
         extraCalls: 0,
         overageDueXaf: 0,

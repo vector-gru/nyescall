@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/datasources/auth_remote_datasource.dart';
 import '../../../../core/errors/app_exception.dart';
+import '../../../../shared/data/services/firestore_service.dart';
+import '../../../../shared/presentation/providers/service_providers.dart';
 
 /// The state of an auth action (sign in / sign up / Google).
 sealed class AuthActionState {
@@ -34,9 +36,10 @@ final authDatasourceProvider = Provider<AuthRemoteDatasource>(
 
 /// Drives all auth actions from the UI.
 class AuthNotifier extends StateNotifier<AuthActionState> {
-  AuthNotifier(this._ds) : super(const AuthActionIdle());
+  AuthNotifier(this._ds, this._firestore) : super(const AuthActionIdle());
 
   final AuthRemoteDatasource _ds;
+  final FirestoreService _firestore;
 
   Future<void> signIn({
     required String email,
@@ -72,6 +75,9 @@ class AuthNotifier extends StateNotifier<AuthActionState> {
           'accountType': accountType,
           'createdAt': FieldValue.serverTimestamp(),
         }, SetOptions(merge: true));
+
+        // Create the trial subscription document for this new user.
+        await _firestore.createTrialSubscription();
       }
 
       state = const AuthActionSuccess(emailSent: true);
@@ -104,5 +110,8 @@ class AuthNotifier extends StateNotifier<AuthActionState> {
 
 final authNotifierProvider =
     StateNotifierProvider<AuthNotifier, AuthActionState>(
-  (ref) => AuthNotifier(ref.watch(authDatasourceProvider)),
+  (ref) => AuthNotifier(
+    ref.watch(authDatasourceProvider),
+    ref.watch(firestoreServiceProvider),
+  ),
 );

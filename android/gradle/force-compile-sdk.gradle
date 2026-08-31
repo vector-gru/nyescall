@@ -1,0 +1,9 @@
+// Force all subprojects to compile against SDK 36
+// to satisfy flutter_plugin_android_lifecycle requirement.
+rootProject.subprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty("android")) {
+            project.android.compileSdkVersion 36
+        }
+    }
+}

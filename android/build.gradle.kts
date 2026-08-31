@@ -5,6 +5,8 @@ allprojects {
     }
 }
 
+apply(from = "gradle/force-compile-sdk.gradle")
+
 val newBuildDir: Directory =
     rootProject.layout.buildDirectory
         .dir("../../build")
@@ -18,6 +20,7 @@ subprojects {
 subprojects {
     project.evaluationDependsOn(":app")
 }
+
 
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)

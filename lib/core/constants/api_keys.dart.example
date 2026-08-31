@@ -1,0 +1,43 @@
+// =============================================================================
+//  NYESCALL — API Keys Template
+// =============================================================================
+//
+//  SETUP:
+//    cp lib/core/constants/api_keys.dart.example \
+//       lib/core/constants/api_keys.dart
+//  Then fill in your real values. api_keys.dart is git-ignored.
+//
+// =============================================================================
+
+abstract final class ApiKeys {
+  // ── OpenAI ────────────────────────────────────────────────────────────────
+  // Get key: https://platform.openai.com/api-keys
+  static const String openAi = 'REPLACE_WITH_OPENAI_KEY';
+
+  // ── ElevenLabs ────────────────────────────────────────────────────────────
+  // Get key: https://elevenlabs.io → Profile → API Key
+  static const String elevenLabs = 'REPLACE_WITH_ELEVENLABS_KEY';
+
+  // ── Twilio ────────────────────────────────────────────────────────────────
+  // Get keys: https://console.twilio.com → Account → API Keys & Tokens
+  static const String twilioAccountSid = 'REPLACE_WITH_TWILIO_ACCOUNT_SID';
+  static const String twilioAuthToken  = 'REPLACE_WITH_TWILIO_AUTH_TOKEN';
+
+  // ── CamPay ────────────────────────────────────────────────────────────────
+  // Sandbox dashboard: https://demo.campay.net
+  // Prod dashboard:    https://campay.net
+  static const String camPayAppId          = 'REPLACE_WITH_CAMPAY_APP_ID';
+  static const String camPayUsername       = 'REPLACE_WITH_CAMPAY_USERNAME';
+  static const String camPayPassword       = 'REPLACE_WITH_CAMPAY_PASSWORD';
+  static const String camPayPermanentToken = 'REPLACE_WITH_CAMPAY_PERMANENT_TOKEN';
+  static const String camPayWebhookKey     = 'REPLACE_WITH_CAMPAY_WEBHOOK_KEY';
+
+  // ── Cloudinary ────────────────────────────────────────────────────────────
+  // Get keys: https://cloudinary.com → Dashboard → API Keys
+  // Create unsigned upload preset:
+  //   Settings → Upload → Upload presets → Add preset → set to Unsigned
+  static const String cloudinaryCloudName    = 'REPLACE_WITH_CLOUD_NAME';
+  static const String cloudinaryApiKey       = 'REPLACE_WITH_CLOUDINARY_API_KEY';
+  static const String cloudinaryApiSecret    = 'REPLACE_WITH_CLOUDINARY_API_SECRET';
+  static const String cloudinaryUploadPreset = 'REPLACE_WITH_UPLOAD_PRESET';
+}

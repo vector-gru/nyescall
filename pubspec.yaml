@@ -1,0 +1,94 @@
+name: nyescall
+description: AI outbound calls, in any language. Powered by Bland AI.
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Firebase
+  firebase_core: ^3.8.0
+  firebase_auth: ^5.3.2
+  cloud_firestore: ^5.5.0
+  # firebase_messaging removed for now — re-add when push notifications are needed.
+  google_sign_in: ^6.2.1
+  # Navigation
+  go_router: ^14.2.7
+
+  # State management
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+
+  # HTTP & networking
+  dio: ^5.7.0
+  http_parser: ^4.1.2
+  mime: ^1.0.6
+
+  # UI & styling
+  google_fonts: ^6.2.1
+  cached_network_image: ^3.3.1
+  flutter_svg: ^2.0.10+1
+  shimmer: ^3.0.0
+  gap: ^3.0.1
+  badges: ^3.1.2
+
+  # Phone input & country picker
+  intl_phone_field: ^3.2.0
+  country_picker: ^2.0.26
+
+  # Audio recording (for voice samples)
+  # record and audio_waveforms are intentionally excluded — they pull in
+  # broken Linux platform packages that fail the iOS build. Will be added
+  # back once upstream packages fix their platform implementations.
+  just_audio: ^0.9.39
+
+  # File picking & image handling
+  file_picker: ^8.0.7
+  image_picker: ^1.1.2
+  # image_cropper removed — conflicts with file_picker's DKImagePickerController
+  # over TOCropViewController version. Will re-add when cropping is actively used.
+
+  # Forms & validation
+  reactive_forms: ^17.0.1
+
+  # Local storage
+  shared_preferences: ^2.3.1
+  flutter_secure_storage: ^9.2.2
+
+  # Utilities
+  intl: ^0.20.0
+  path: ^1.9.0
+  equatable: ^2.0.5
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+  uuid: ^4.4.2
+  url_launcher: ^6.3.0
+  permission_handler: ^11.3.1
+  connectivity_plus: ^6.0.3
+  package_info_plus: ^8.0.2
+  logger: ^2.4.0
+  flutter_animate: ^4.5.0
+  loading_animation_widget: ^1.2.1
+  lottie: ^3.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.12
+  freezed: ^2.5.7
+  json_serializable: ^6.8.0
+  riverpod_generator: ^2.4.3
+  flutter_launcher_icons: ^0.14.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/animations/
